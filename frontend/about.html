@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about the inspiration behind AgroGuard, our target objectives, architectural layout, and the sustainable technology stack we employ.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container">
+      <a href="index.html" class="logo-link" id="navLogoLink">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="logo-img" id="navLogoImg">
+        <span class="logo-text" id="navLogoText">AgroGuard</span>
+      </a>
+      
+      <button class="hamburger" id="menuHamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link" id="navLinkHome" data-i18n="nav.home">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link active" id="navLinkAbout" data-i18n="nav.about">About</a></li>
+        <li class="nav-item"><a href="features.html" class="nav-link" id="navLinkFeatures" data-i18n="nav.features">Features</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link" id="navLinkDashboard" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="profile.html" class="nav-link" id="navLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+        <li class="nav-item">
+          <a href="alerts.html" class="nav-link nav-bell-link" id="navLinkAlerts" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            <span class="bell-badge" id="navBellBadge" style="display: none;">0</span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link" id="navLinkContact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- About Hero Section -->
+  <header class="about-hero" id="aboutHero">
+    <div class="container">
+      <h1 id="aboutTitle" data-i18n="about.hero_title">About AgroGuard</h1>
+      <p class="about-intro-text" id="aboutSubtitle" data-i18n="about.hero_subtitle">Discover how low-cost IoT sensor architecture and cloud advisory nodes are reshaping agricultural practices for small-scale farming plots.</p>
+    </div>
+  </header>
+
+  <!-- Problem Statement vs. Solution -->
+  <section class="section" id="problemSolutionSection">
+    <div class="container problem-solution-section">
+      <!-- Problem Card -->
+      <div class="about-card problem reveal" id="cardProblem">
+        <h3 id="problemTitle" data-i18n="about.problem_title" data-i18n-keep-children="true">
+          <svg style="width:28px;height:28px;" viewBox="0 0 24 24"><path d="M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.47 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z" fill="currentColor"/></svg>
+          The Problem
+        </h3>
+        <p id="problemIntro" data-i18n="about.problem_intro">Agricultural sectors worldwide face severe resource constraints and unpredictable shifts due to changing weather models. Traditional farming relies on generic techniques, resulting in:</p>
+        <ul id="problemList">
+          <li data-i18n="about.problem_water"><strong>Water Inefficiency:</strong> Over-watering crops washes away vital soil nutrients and depletes local water reservoirs.</li>
+          <li data-i18n="about.problem_finance"><strong>Financial Barriers:</strong> Commercial smart agriculture instrumentation is expensive and complex, keeping it out of reach for small farmers.</li>
+          <li data-i18n="about.problem_yield"><strong>Sub-optimal Yields:</strong> Lack of real-time insights leads to crop diseases, root rot, and general soil degradation.</li>
+          <li data-i18n="about.problem_manual"><strong>Manual Overhead:</strong> Farmers spend hours physically checking fields, drawing attention away from high-value tasks.</li>
+        </ul>
+      </div>
+
+      <!-- Solution Card -->
+      <div class="about-card solution reveal" id="cardSolution">
+        <h3 id="solutionTitle" data-i18n="about.solution_title" data-i18n-keep-children="true">
+          <svg style="width:28px;height:28px;" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z" fill="currentColor"/></svg>
+          The AgroGuard Solution
+        </h3>
+        <p id="solutionIntro" data-i18n="about.solution_intro">AgroGuard introduces a low-cost, plug-and-play decision support node that simplifies resource allocation through edge computing:</p>
+        <ul id="solutionList">
+          <li data-i18n="about.solution_drip"><strong>Volumetric Drip Automation:</strong> Saves up to 40% of irrigation water by activating pumps only when moisture levels dip below computed minimums.</li>
+          <li data-i18n="about.solution_cost"><strong>Low-cost Implementation:</strong> Built on open-source IoT microcontrollers, costing a fraction of commercial alternatives.</li>
+          <li data-i18n="about.solution_advisory"><strong>Micro-advisories:</strong> Translates live environmental readings into immediate advice on fertilizer needs and optimal harvest timings.</li>
+          <li data-i18n="about.solution_safeguard"><strong>Autonomous Safeguards:</strong> Embedded fail-safes monitor tank metrics and abort watering cycles when rain is detected.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Working Principle (Timeline) -->
+  <section class="section section-bg-light" id="workingPrincipleSection">
+    <div class="container">
+      <div class="section-header reveal" id="workingHeader">
+        <h2 id="workingTitle" data-i18n="about.how_title">How AgroGuard Works</h2>
+        <p id="workingDesc" data-i18n="about.how_desc">A seamless data pipeline bridging sub-surface soils directly to user interfaces.</p>
+      </div>
+
+      <div class="working-grid" id="workingStepsGrid">
+        <!-- Step 1 -->
+        <div class="working-step reveal" id="stepDataAcquisition">
+          <div class="step-num flex-center" id="stepNum1">1</div>
+          <h4 id="stepTitle1" data-i18n="about.step1_title">Telemetry Capture</h4>
+          <p id="stepDesc1" data-i18n="about.step1_desc">A network of soil sensors captures moisture, air temperature, relative humidity, and rainfall status at the field level.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="working-step reveal" id="stepTransmission">
+          <div class="step-num flex-center" id="stepNum2">2</div>
+          <h4 id="stepTitle2" data-i18n="about.step2_title">Analytics Engine</h4>
+          <p id="stepDesc2" data-i18n="about.step2_desc">The captured data is uploaded to a Python backend. The server runs crop prediction algorithms against the inputs.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="working-step reveal" id="stepAdvisory">
+          <div class="step-num flex-center" id="stepNum3">3</div>
+          <h4 id="stepTitle3" data-i18n="about.step3_title">Farmer Action Console</h4>
+          <p id="stepDesc3" data-i18n="about.step3_desc">Results are instantly rendered on our mobile-responsive dashboard, suggesting optimal watering times and crop suggestions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section class="section" id="techStackSection">
+    <div class="container">
+      <div class="section-header reveal" id="techHeader">
+        <h2 id="techTitle" data-i18n="about.tech_title">Technology Under the Hood</h2>
+        <p id="techDesc" data-i18n="about.tech_desc">A robust stack designed for maximum uptime, scalability, and minimal maintenance overhead.</p>
+      </div>
+
+      <div class="tech-grid" id="techCardsGrid">
+        <!-- Tech Card 1 -->
+        <div class="tech-card reveal" id="techHtml">
+          <div class="tech-icon flex-center" id="techIconHtml">
+            <svg viewBox="0 0 24 24"><path d="M12,2L2,22L12,17L22,22L12,2Z" fill="currentColor"/></svg>
+          </div>
+          <h5 id="techTitleHtml" data-i18n="about.tech_html_title">HTML5 & CSS3</h5>
+          <p id="techDescHtml" data-i18n="about.tech_html_desc">Semantic layout combined with custom fluid CSS styles for rendering speed and compatibility.</p>
+        </div>
+
+        <!-- Tech Card 2 -->
+        <div class="tech-card reveal" id="techJs">
+          <div class="tech-icon flex-center" id="techIconJs">
+            <svg viewBox="0 0 24 24"><path d="M3,3V21H21V3H3M7.73,18.04C7.03,18.04 6.45,17.7 6,17C6.46,16.73 7.08,16.3 7.5,16C7.81,16.46 8.08,16.76 8.56,16.76C9.07,16.76 9.4,16.43 9.4,15.77V11H11.23V15.72C11.23,17.1 10.15,18.04 8.78,18.04C8.36,18.04 8.03,18.04 7.73,18.04M16.32,18C15,18 14.21,17.29 13.78,16.5C14.23,16.2 14.86,15.79 15.28,15.5C15.6,16.03 16,16.4 16.5,16.4C16.92,16.4 17.27,16.14 17.27,15.72C17.27,15.3 17,15.11 16.29,14.81L15.65,14.54C14.5,14.07 13.92,13.25 13.92,12.18C13.92,10.9 14.9,10 16.27,10C17.22,10 18,10.5 18.4,11.2C17.96,11.5 17.38,11.9 17,12.16C16.72,11.75 16.4,11.5 16.07,11.5C15.7,11.5 15.42,11.72 15.42,12.06C15.42,12.38 15.65,12.5 16.28,12.77L16.92,13.04C18.15,13.56 18.77,14.27 18.77,15.39C18.77,16.89 17.7,18 16.32,18Z" fill="currentColor"/></svg>
+          </div>
+          <h5 id="techTitleJs" data-i18n="about.tech_js_title">Vanilla ES6+ JS</h5>
+          <p id="techDescJs" data-i18n="about.tech_js_desc">Lightweight asynchronous service layers update the UI and simulate physical triggers smoothly.</p>
+        </div>
+
+        <!-- Tech Card 3 -->
+        <div class="tech-card reveal" id="techFlask">
+          <div class="tech-icon flex-center" style="color:var(--primary-green);" id="techIconFlask">
+            <svg viewBox="0 0 24 24"><path d="M19,2H5A2,2 0 0,0 3,4V18A2,2 0 0,0 5,20H9L12,23L15,20H19A2,2 0 0,0 21,18V4A2,2 0 0,0 19,2M13.88,12.88L12,11L10.12,12.88L9,11.76L10.88,9.88L9,8L10.12,6.88L12,8.76L13.88,6.88L15,8L13.12,9.88L15,11.76L13.88,12.88Z" fill="currentColor"/></svg>
+          </div>
+          <h5 id="techTitleFlask" data-i18n="about.tech_backend_title">Python Backend</h5>
+          <p id="techDescFlask" data-i18n="about.tech_backend_desc">Lightweight server API endpoints serve JSON data and handle incoming control instructions.</p>
+        </div>
+
+        <!-- Tech Card 4 -->
+        <div class="tech-card reveal" id="techHardware">
+          <div class="tech-icon flex-center" style="color:var(--accent-brown);" id="techIconHardware">
+            <svg viewBox="0 0 24 24"><path d="M21,16.5C21,16.88 20.79,17.21 20.47,17.38L12.47,21.38C12.17,21.53 11.83,21.53 11.53,21.38L3.53,17.38C3.21,17.21 3,16.88 3,16.5V7.5C3,7.12 3.21,6.79 3.53,6.62L11.53,2.62C11.83,2.47 12.17,2.47 12.47,2.62L20.47,6.62C20.79,6.79 21,7.12 21,7.5V16.5M12,4.15L5,7.65L12,11.15L19,7.65L12,4.15M5,9.97V15.38L11,18.38V12.97L5,9.97M19,9.97L13,12.97V18.38L19,15.38V9.97Z" fill="currentColor"/></svg>
+          </div>
+          <h5 id="techTitleHardware" data-i18n="about.tech_hardware_title">IoT Hardware</h5>
+          <p id="techDescHardware" data-i18n="about.tech_hardware_desc">ESP8266/ESP32 microcontrollers integrate moisture probes and switch water pumps autonomously.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="mainFooter">
+    <div class="container footer-grid">
+      <div class="footer-brand" id="footerBrand">
+        <h4>AgroGuard</h4>
+        <p data-i18n="common.footer_desc">A smart, low-cost agronomic decision support system providing telemetry automation and water conservation metrics to farming communities.</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;" data-i18n="common.footer_tagline">Designed for modern AgriTech and ecological sustainability.</p>
+      </div>
+
+      <div class="footer-links" id="footerLinks">
+        <h5 data-i18n="common.quick_links">Quick Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="index.html" id="footLinkHome" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" id="footLinkAbout" data-i18n="nav.about">About Project</a></li>
+          <li><a href="features.html" id="footLinkFeatures" data-i18n="nav.features">Platform Features</a></li>
+          <li><a href="dashboard.html" id="footLinkDashboard" data-i18n="nav.dashboard">Live Dashboard</a></li>
+          <li><a href="profile.html" id="footLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+          <li><a href="alerts.html" id="footLinkAlerts" data-i18n="nav.alerts">Alerts & Notifications</a></li>
+          <li><a href="contact.html" id="footLinkContact" data-i18n="nav.contact">Contact Team</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact" id="footerContact">
+        <h5 data-i18n="common.project_details">Project Details</h5>
+        <div class="footer-contact-item" id="footDetailsCollege">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" fill="currentColor"/></svg>
+          </div>
+          <span data-i18n="common.college_dept">AgriTech Innovations Lab, Department of Computer Science & Engineering</span>
+        </div>
+        <div class="footer-contact-item" id="footDetailsEmail">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" fill="currentColor"/></svg>
+          </div>
+          <span>kunal610sharma@gmail.com</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom" id="footerBottom">
+      <p data-i18n="common.copyright">&copy; 2026 AgroGuard Project. All Rights Reserved. Built for Smart Agricultural Sustainability.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

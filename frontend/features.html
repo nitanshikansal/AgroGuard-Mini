@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Discover AgroGuard's core monitoring systems, predictive crop engines, smart irrigation scheduling, and tank safeguards.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container">
+      <a href="index.html" class="logo-link" id="navLogoLink">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="logo-img" id="navLogoImg">
+        <span class="logo-text" id="navLogoText">AgroGuard</span>
+      </a>
+      
+      <button class="hamburger" id="menuHamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link" id="navLinkHome" data-i18n="nav.home">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link" id="navLinkAbout" data-i18n="nav.about">About</a></li>
+        <li class="nav-item"><a href="features.html" class="nav-link active" id="navLinkFeatures" data-i18n="nav.features">Features</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link" id="navLinkDashboard" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="profile.html" class="nav-link" id="navLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+        <li class="nav-item">
+          <a href="alerts.html" class="nav-link nav-bell-link" id="navLinkAlerts" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            <span class="bell-badge" id="navBellBadge" style="display: none;">0</span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link" id="navLinkContact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Features Hero Section -->
+  <header class="about-hero" id="featuresHero">
+    <div class="container">
+      <h1 id="featuresPageTitle" data-i18n="features.hero_title">Platform Features</h1>
+      <p class="about-intro-text" id="featuresPageSubtitle" data-i18n="features.hero_subtitle">An overview of the monitoring parameters, algorithmic checks, and automatic controls integrated into the AgroGuard ecosystem.</p>
+    </div>
+  </header>
+
+  <!-- Feature Cards Grid Section -->
+  <section class="section" id="featureGridSection">
+    <div class="container">
+      <div class="grid-3" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;" id="allFeaturesGrid">
+        
+        <!-- Card 1: Soil Moisture -->
+        <div class="feature-card reveal" id="soil-moisture">
+          <div class="feature-icon-wrapper" id="iconSoilMoistureCard">
+            <svg viewBox="0 0 24 24"><path d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20M12,5.5C10.5,7.5 7.8,11.2 7.8,14A4.2,4.2 0 0,0 12,18.2A4.2,4.2 0 0,0 16.2,14C16.2,11.2 13.5,7.5 12,5.5Z"/></svg>
+          </div>
+          <h3 id="soilMoistureCardTitle">Soil Moisture Monitoring</h3>
+          <p id="soilMoistureCardDesc">Sub-surface probes measure the Volumetric Water Content (VWC) of soil. Data is processed locally to avoid waterlogging and root rot, ensuring ideal root-zone respiration.</p>
+        </div>
+
+        <!-- Card 2: Temperature -->
+        <div class="feature-card reveal" id="temperature">
+          <div class="feature-icon-wrapper" style="color:var(--accent-brown); background-color:var(--accent-brown-light);" id="iconTempCard">
+            <svg viewBox="0 0 24 24"><path d="M15,13V5A3,3 0 0,0 12,2A3,3 0 0,0 9,5V13A5,5 0 0,0 7,17A5,5 0 0,0 12,22A5,5 0 0,0 17,17A5,5 0 0,0 15,13M12,4A1,1 0 0,1 13,5V8H11V5A1,1 0 0,1 12,4M12,20A3,3 0 0,1 9,17A3,3 0 0,1 10.5,14.5L11,14.17V10H13V14.17L13.5,14.5A3,3 0 0,1 15,17A3,3 0 0,1 12,20Z"/></svg>
+          </div>
+          <h3 id="tempCardTitle">Ambient Temperature</h3>
+          <p id="tempCardDesc">Tracks atmospheric temperature levels to identify extreme heat waves or freezing frost events. Thermal data assists in calculating crop evaporation rates and stress levels.</p>
+        </div>
+
+        <!-- Card 3: Humidity -->
+        <div class="feature-card reveal" id="humidity">
+          <div class="feature-icon-wrapper" style="color:var(--accent-blue); background-color:var(--accent-blue-light);" id="iconHumidityCard">
+            <svg viewBox="0 0 24 24"><path d="M19.35,10.04C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.04C2.34,8.36 0,10.9 0,14C0,17.1 2.9,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.04M19,18H6C3.79,18 2,16.21 2,14C2,11.95 3.53,10.24 5.56,10.03L6.63,9.92L7.13,8.97C8.08,7.14 9.94,6 12,6C14.89,6 17.39,8.08 17.85,10.95L18.12,12.58L19.73,12.69C21.07,12.78 22,13.81 22,15C22,16.65 20.65,18 19,18Z"/></svg>
+          </div>
+          <h3 id="humidityCardTitle">Relative Humidity</h3>
+          <p id="humidityCardDesc">Monitors moisture concentrations in the air. High humidity predictions are factored into disease vulnerability alerts, prompting preventive crop measures.</p>
+        </div>
+
+        <!-- Card 4: Rain Detection -->
+        <div class="feature-card reveal" id="rain-detection">
+          <div class="feature-icon-wrapper" id="iconRainCard">
+            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V12H16V14H10V6H12Z"/></svg>
+          </div>
+          <h3 id="rainCardTitle">Rainfall Detection</h3>
+          <p id="rainCardDesc">A sensitive digital rain detector registers initial precipitation. Upon detection, all active automated irrigation schedules are immediately aborted to conserve water.</p>
+        </div>
+
+        <!-- Card 5: Water Tank Level -->
+        <div class="feature-card reveal" id="water-tank">
+          <div class="feature-icon-wrapper" style="color:var(--accent-blue); background-color:var(--accent-blue-light);" id="iconWaterCard">
+            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z"/></svg>
+          </div>
+          <h3 id="waterCardTitle">Water Tank Monitoring</h3>
+          <p id="waterCardDesc">Ultrasonic level sensors calculate available tank volume capacity. The system halts active water pumps if levels fall too low, preventing pump burnout.</p>
+        </div>
+
+        <!-- Card 6: Smart Irrigation Advisory -->
+        <div class="feature-card reveal" id="irrigation-advisory">
+          <div class="feature-icon-wrapper" style="color:var(--accent-brown); background-color:var(--accent-brown-light);" id="iconIrrigCard">
+            <svg viewBox="0 0 24 24"><path d="M12,2F1 21.6,15 22,15C22,18.87 18.87,22 15,22C11.13,22 8,18.87 8,15C8,11.66 12,2 12,2M12,5.56C10.45,9.2 9.8,11.83 9.8,15C9.8,17.87 12.13,20.2 15,20.2C17.87,20.2 20.2,17.87 20.2,15C20.2,11.83 19.55,9.2 18,5.56H12Z"/></svg>
+          </div>
+          <h3 id="irrigCardTitle">Smart Irrigation Advisory</h3>
+          <p id="irrigCardDesc">Fuses historical moisture datasets with live weather predictions. Dynamically schedules irrigation for cool evening hours to minimize evaporation losses.</p>
+        </div>
+
+        <!-- Card 7: Crop Recommendation -->
+        <div class="feature-card reveal" id="crop-recommendation">
+          <div class="feature-icon-wrapper" id="iconCropCard">
+            <svg viewBox="0 0 24 24"><path d="M17,8C15.9,8 15,8.9 15,10C15,11.1 15.9,12 17,12C18.1,12 19,11.1 19,10C19,8.9 18.1,8 17,8M7,8C5.9,8 5,8.9 5,10C5,11.1 5.9,12 7,12C8.1,12 9,11.1 9,10C9,8.9 8.1,8 7,8M12,14C8.67,14 2,15.67 2,19V22H22V19C22,15.67 15.33,14 12,14M4,20C4.33,19.03 8.35,18 12,18C15.65,18 19.67,19.03 20,20H4Z"/></svg>
+          </div>
+          <h3 id="cropCardTitle">Crop Recommendation Model</h3>
+          <p id="cropCardDesc">Recommends optimal crop options (e.g. Maize, Rice, or Pulses) matching current farm properties, helping farmers optimize yields and crop rotation schedules.</p>
+        </div>
+
+        <!-- Card 8: Farm Health Index -->
+        <div class="feature-card reveal" id="health-index">
+          <div class="feature-icon-wrapper" style="color:var(--accent-blue); background-color:var(--accent-blue-light);" id="iconHealthCard">
+            <svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/></svg>
+          </div>
+          <h3 id="healthCardTitle">Farm Health Index</h3>
+          <p id="healthCardDesc">A unified agricultural index grading farm plot wellness on a 0-100 scale, calculated dynamically by combining moisture stability, ambient stress, and tank availability.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="mainFooter">
+    <div class="container footer-grid">
+      <div class="footer-brand" id="footerBrand">
+        <h4>AgroGuard</h4>
+        <p data-i18n="common.footer_desc">A smart, low-cost agronomic decision support system providing telemetry automation and water conservation metrics to farming communities.</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;" data-i18n="common.footer_tagline">Designed for modern AgriTech and ecological sustainability.</p>
+      </div>
+
+      <div class="footer-links" id="footerLinks">
+        <h5 data-i18n="common.quick_links">Quick Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="index.html" id="footLinkHome" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" id="footLinkAbout" data-i18n="nav.about">About Project</a></li>
+          <li><a href="features.html" id="footLinkFeatures" data-i18n="nav.features">Platform Features</a></li>
+          <li><a href="dashboard.html" id="footLinkDashboard" data-i18n="nav.dashboard">Live Dashboard</a></li>
+          <li><a href="profile.html" id="footLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+          <li><a href="alerts.html" id="footLinkAlerts" data-i18n="nav.alerts">Alerts & Notifications</a></li>
+          <li><a href="contact.html" id="footLinkContact" data-i18n="nav.contact">Contact Team</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact" id="footerContact">
+        <h5 data-i18n="common.project_details">Project Details</h5>
+        <div class="footer-contact-item" id="footDetailsCollege">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" fill="currentColor"/></svg>
+          </div>
+          <span data-i18n="common.college_dept">AgriTech Innovations Lab, Department of Computer Science & Engineering</span>
+        </div>
+        <div class="footer-contact-item" id="footDetailsEmail">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" fill="currentColor"/></svg>
+          </div>
+          <span>kunal610sharma@gmail.com</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom" id="footerBottom">
+      <p data-i18n="common.copyright">&copy; 2026 AgroGuard Project. All Rights Reserved. Built for Smart Agricultural Sustainability.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

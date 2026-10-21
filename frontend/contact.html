@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get in touch with the AgroGuard development team. Provide feedback, ask for technical specifications, or join our community.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container">
+      <a href="index.html" class="logo-link" id="navLogoLink">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="logo-img" id="navLogoImg">
+        <span class="logo-text" id="navLogoText">AgroGuard</span>
+      </a>
+      
+      <button class="hamburger" id="menuHamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link" id="navLinkHome" data-i18n="nav.home">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link" id="navLinkAbout" data-i18n="nav.about">About</a></li>
+        <li class="nav-item"><a href="features.html" class="nav-link" id="navLinkFeatures" data-i18n="nav.features">Features</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link" id="navLinkDashboard" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="profile.html" class="nav-link" id="navLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+        <li class="nav-item">
+          <a href="alerts.html" class="nav-link nav-bell-link" id="navLinkAlerts" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            <span class="bell-badge" id="navBellBadge" style="display: none;">0</span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link active" id="navLinkContact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contact Hero Section -->
+  <header class="about-hero" id="contactHero">
+    <div class="container">
+      <h1 id="contactPageTitle" data-i18n="contact.hero_title">Get in Touch</h1>
+      <p class="about-intro-text" id="contactPageSubtitle" data-i18n="contact.hero_subtitle">Have questions about the sensor configuration, API schema, or project deployment? Reach out to our development team.</p>
+    </div>
+  </header>
+
+  <!-- Contact Section containing details and submission form -->
+  <section class="section" id="contactBodySection">
+    <div class="container contact-grid">
+      
+      <!-- Left Column: Contact details & Team profiles -->
+      <div class="contact-info-card reveal" id="contactInfoCard">
+        <h3 id="infoCardTitle" data-i18n="contact.project_info">Project Information</h3>
+        
+        <!-- College Detail -->
+        <div class="contact-detail-item" id="detailCollege">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/></svg>
+          </div>
+          <div class="contact-detail-text" id="collegeText">
+            <h5 data-i18n="contact.college_affiliation">College Affiliation</h5>
+            <p>AgriTech Innovations Lab<br>Department of Computer Science & Engineering<br>School of Technological Engineering & Science</p>
+          </div>
+        </div>
+
+        <!-- Email Contact -->
+        <div class="contact-detail-item" id="detailEmail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z"/></svg>
+          </div>
+          <div class="contact-detail-text" id="emailText">
+            <h5 data-i18n="contact.direct_support">Direct Support</h5>
+            <p>kunal610sharma@gmail.com</p>
+          </div>
+        </div>
+
+        <!-- Project Team -->
+        <h4 class="team-list-header" id="teamHeaderTitle" data-i18n="contact.dev_team">Project Development Team</h4>
+        <div class="team-list" id="teamListContainer">
+          <!-- Member 1 -->
+          <div class="team-member" id="teamMember1">
+            <div class="team-avatar" id="avatarMember1">KS</div>
+            <div class="team-info" id="infoMember1">
+              <h5>Kunal Sharma</h5>
+              <p data-i18n="contact.lead_dev_role">Lead Developer | Frontend Specialist</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GitHub Placeholder -->
+        <div style="margin-top: 30px;" id="githubWrapper">
+          <a href="https://github.com/agroguard-project/agroguard" target="_blank" class="btn btn-secondary btn-sm" id="btnGithubLink" style="width: 100%;" data-i18n="contact.github_repo" data-i18n-keep-children="true">
+            <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" fill="currentColor"/></svg>
+            View GitHub Repository
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Contact Form -->
+      <div class="contact-form-card reveal" id="contactFormCard">
+        <h3 id="formCardTitle" data-i18n="contact.send_message">Send Us a Message</h3>
+        <p style="color: var(--text-muted); font-size:0.9rem; margin-bottom: 30px;" id="formCardSubtitle" data-i18n="contact.send_desc">Fill out the fields below and our automated mail system will forward it to the team.</p>
+        
+        <form id="contactForm" novalidate>
+          <!-- Full Name -->
+          <div class="form-group" id="groupName">
+            <input type="text" id="name" class="form-control" placeholder=" " required>
+            <label for="name" class="form-label" id="labelName" data-i18n="contact.name_label">Full Name</label>
+          </div>
+
+          <!-- Email Address -->
+          <div class="form-group" id="groupEmail">
+            <input type="email" id="email" class="form-control" placeholder=" " required>
+            <label for="email" class="form-label" id="labelEmail" data-i18n="contact.email_label">Email Address</label>
+          </div>
+
+          <!-- Subject -->
+          <div class="form-group" id="groupSubject">
+            <input type="text" id="subject" class="form-control" placeholder=" " required>
+            <label for="subject" class="form-label" id="labelSubject" data-i18n="contact.subject_label">Subject</label>
+          </div>
+
+          <!-- Message -->
+          <div class="form-group" id="groupMessage">
+            <textarea id="message" class="form-control" placeholder=" " required></textarea>
+            <label for="message" class="form-label" id="labelMessage" data-i18n="contact.message_label">Message Body</label>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary" id="btnSubmitForm" style="width: 100%;">
+            <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" fill="currentColor"/></svg>
+            <span data-i18n="contact.send_message">Send message</span>
+          </button>
+        </form>
+
+        <!-- Feedback Notification Banner -->
+        <div class="form-feedback" id="formFeedback"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="mainFooter">
+    <div class="container footer-grid">
+      <div class="footer-brand" id="footerBrand">
+        <h4>AgroGuard</h4>
+        <p data-i18n="common.footer_desc">A smart, low-cost agronomic decision support system providing telemetry automation and water conservation metrics to farming communities.</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;" data-i18n="common.footer_tagline">Designed for modern AgriTech and ecological sustainability.</p>
+      </div>
+
+      <div class="footer-links" id="footerLinks">
+        <h5 data-i18n="common.quick_links">Quick Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="index.html" id="footLinkHome" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" id="footLinkAbout" data-i18n="nav.about">About Project</a></li>
+          <li><a href="features.html" id="footLinkFeatures" data-i18n="nav.features">Platform Features</a></li>
+          <li><a href="dashboard.html" id="footLinkDashboard" data-i18n="nav.dashboard">Live Dashboard</a></li>
+          <li><a href="profile.html" id="footLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+          <li><a href="alerts.html" id="footLinkAlerts" data-i18n="nav.alerts">Alerts & Notifications</a></li>
+          <li><a href="contact.html" id="footLinkContact" data-i18n="nav.contact">Contact Team</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact" id="footerContact">
+        <h5 data-i18n="common.project_details">Project Details</h5>
+        <div class="footer-contact-item" id="footDetailsCollege">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" fill="currentColor"/></svg>
+          </div>
+          <span data-i18n="common.college_dept">AgriTech Innovations Lab, Department of Computer Science & Engineering</span>
+        </div>
+        <div class="footer-contact-item" id="footDetailsEmail">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" fill="currentColor"/></svg>
+          </div>
+          <span>kunal610sharma@gmail.com</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom" id="footerBottom">
+      <p data-i18n="common.copyright">&copy; 2026 AgroGuard Project. All Rights Reserved. Built for Smart Agricultural Sustainability.</p>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Secrets
+.env
+.env.*
+!.env.example
+arduino_secrets.h
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# Node.js
+node_modules/
+
+# Logs
+*.log

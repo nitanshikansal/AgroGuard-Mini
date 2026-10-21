@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Farmer Login and Registration for AgroGuard Smart Farming Decision Support System.">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container">
+      <a href="index.html" class="logo-link" id="navLogoLink">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="logo-img" id="navLogoImg">
+        <span class="logo-text" id="navLogoText">AgroGuard</span>
+      </a>
+      
+      <button class="hamburger" id="menuHamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link" id="navLinkHome" data-i18n="nav.home">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link" id="navLinkAbout" data-i18n="nav.about">About</a></li>
+        <li class="nav-item"><a href="features.html" class="nav-link" id="navLinkFeatures" data-i18n="nav.features">Features</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link" id="navLinkDashboard" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="profile.html" class="nav-link" id="navLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+        <li class="nav-item">
+          <a href="alerts.html" class="nav-link nav-bell-link" id="navLinkAlerts" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            <span class="bell-badge" id="navBellBadge" style="display: none;">0</span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link" id="navLinkContact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Auth Container -->
+  <main class="auth-wrapper" id="authWrapper">
+    <div class="auth-card" id="authCard">
+      
+      <!-- Notification / Alert Box -->
+      <div class="auth-alert" id="authAlert" role="alert">
+        <svg style="width:18px;height:18px;flex-shrink:0;" viewBox="0 0 24 24"><path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" fill="currentColor"/></svg>
+        <span id="authAlertText">Alert message</span>
+      </div>
+
+      <!-- =========================================================
+           VIEW 1: SPLASH SCREEN / WELCOME
+           ========================================================= -->
+      <section class="splash-view" id="viewSplash">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="splash-logo" id="splashLogo">
+        <span class="splash-badge">Smart Farming Platform</span>
+        <h1 class="splash-title" data-i18n="auth.splash_title">Welcome to AgroGuard</h1>
+        <p class="splash-subtitle" data-i18n="auth.splash_desc">Low-cost IoT decision support empowering farmers with precision irrigation telemetry and crop health analytics.</p>
+        
+        <button class="btn btn-primary" id="btnStartLogin" style="width: 100%; max-width: 320px;">
+          <svg style="width:18px;height:18px;margin-right:8px;" viewBox="0 0 24 24"><path d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" fill="currentColor"/></svg>
+          <span data-i18n="auth.enter_portal">Enter Farmer Portal</span>
+        </button>
+      </section>
+
+      <!-- =========================================================
+           VIEW 2: MOBILE NUMBER ENTRY
+           ========================================================= -->
+      <section style="display: none;" id="viewPhone">
+        <div class="auth-header">
+          <h2 data-i18n="auth.login_title">Farmer Login / Register</h2>
+          <p data-i18n="auth.login_subtitle">Enter your mobile number to securely access your farm telemetry</p>
+        </div>
+
+        <!-- Development Demo Notice -->
+        <div class="demo-banner">
+          <div class="demo-banner-text">
+            <strong>Demo Mode:</strong> Any 10-digit number works. Code: <strong>123456</strong>
+          </div>
+          <button type="button" class="btn-autofill" id="btnFillDemoPhone" data-i18n="auth.demo_phone_btn">Use Demo #</button>
+        </div>
+
+        <form id="phoneForm" novalidate>
+          <div class="phone-input-row">
+            <div class="country-code-pill">
+              <svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" fill="currentColor"/></svg>
+              <span>+91</span>
+            </div>
+            <div class="form-group phone-field" style="margin-bottom: 0;">
+              <input type="tel" id="farmerPhone" class="form-control" placeholder=" " maxlength="10" inputmode="numeric" required>
+              <label for="farmerPhone" class="form-label" data-i18n="auth.mobile_label">10-Digit Mobile Number</label>
+            </div>
+          </div>
+
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:24px;">
+            We will send a 6-digit one-time password (OTP) to this mobile number for verification.
+          </p>
+
+          <button type="submit" class="btn btn-primary" id="btnSendOtp" style="width: 100%;" data-i18n="auth.send_otp">
+            Send Verification Code (OTP)
+          </button>
+        </form>
+      </section>
+
+      <!-- =========================================================
+           VIEW 3: OTP VERIFICATION
+           ========================================================= -->
+      <section style="display: none;" id="viewOtp">
+        <div class="auth-header">
+          <h2 data-i18n="auth.otp_title">Verify Mobile Number</h2>
+          <p>Enter the 6-digit code sent to <strong id="phoneDisplay">+91 ----------</strong> <a href="#" id="btnEditPhone" style="color:var(--primary-green); margin-left:6px; font-weight:600;">Edit</a></p>
+        </div>
+
+        <!-- Demo Mode Hint with 1-Click Auto Fill -->
+        <div class="demo-banner">
+          <div class="demo-banner-text">
+            <strong>Mock OTP:</strong> Enter <strong>123456</strong>
+          </div>
+          <button type="button" class="btn-autofill" id="btnAutoFillOtp" data-i18n="auth.autofill_demo_otp">Auto-fill 123456</button>
+        </div>
+
+        <form id="otpForm" novalidate>
+          <div class="otp-boxes" id="otpBoxContainer">
+            <input type="text" maxlength="1" class="otp-box" data-index="0" inputmode="numeric" autocomplete="one-time-code" autofocus>
+            <input type="text" maxlength="1" class="otp-box" data-index="1" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-box" data-index="2" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-box" data-index="3" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-box" data-index="4" inputmode="numeric">
+            <input type="text" maxlength="1" class="otp-box" data-index="5" inputmode="numeric">
+          </div>
+
+          <div class="otp-resend-row">
+            <span id="timerContainer">Resend code in <strong id="countdownText">60</strong>s</span>
+            <button type="button" class="otp-resend-link" id="btnResendOtp" disabled data-i18n="auth.resend_otp">Resend OTP</button>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btnVerifyOtp" style="width: 100%;" data-i18n="auth.verify_btn">
+            Verify & Proceed
+          </button>
+        </form>
+      </section>
+
+      <!-- =========================================================
+           VIEW 4: FARMER PROFILE SETUP (First-time / Incomplete Profile)
+           ========================================================= -->
+      <section style="display: none;" id="viewProfileSetup">
+        <div class="auth-header">
+          <h2 data-i18n="auth.setup_title">Farm Profile Setup</h2>
+          <p data-i18n="auth.setup_subtitle">Tell us about your farm to calibrate smart advisory and irrigation models</p>
+        </div>
+
+        <form id="profileSetupForm" novalidate>
+          <div class="form-row-2">
+            <div class="form-group">
+              <input type="text" id="setupFarmerName" class="form-control" placeholder=" " required>
+              <label for="setupFarmerName" class="form-label" data-i18n="auth.farmer_name">Farmer Full Name *</label>
+            </div>
+            <div class="form-group">
+              <input type="text" id="setupFarmerPhone" class="form-control" placeholder=" " readonly style="background-color: #f1f5f9; cursor: not-allowed;">
+              <label for="setupFarmerPhone" class="form-label" data-i18n="auth.mobile_label">Mobile Number</label>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <input type="text" id="setupFarmName" class="form-control" placeholder=" " required>
+              <label for="setupFarmName" class="form-label" data-i18n="auth.farm_name">Farm / Estate Name *</label>
+            </div>
+            <div class="form-group">
+              <input type="text" id="setupCropName" class="form-control" placeholder=" " required>
+              <label for="setupCropName" class="form-label" data-i18n="auth.primary_crop">Primary Crop / Block *</label>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <input type="text" id="setupLocation" class="form-control" placeholder=" " required>
+              <label for="setupLocation" class="form-label" data-i18n="auth.location">Location / Village / State *</label>
+            </div>
+            <div class="form-group" style="display: flex; gap: 8px;">
+              <div style="flex: 2; position: relative;">
+                <input type="number" step="0.1" id="setupFarmSize" class="form-control" placeholder=" " required>
+                <label for="setupFarmSize" class="form-label" data-i18n="auth.farm_size">Farm Size *</label>
+              </div>
+              <select id="setupSizeUnit" class="form-control" style="flex: 1.2; padding: 14px 10px;">
+                <option value="Acres" data-i18n="profile.acres">Acres</option>
+                <option value="Hectares" data-i18n="profile.hectares">Hectares</option>
+                <option value="Bigha" data-i18n="profile.bigha">Bigha</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="btnSaveProfile" style="width: 100%; margin-top: 10px;" data-i18n="auth.complete_setup">
+            Save Profile & Launch Dashboard
+          </button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="mainFooter">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h4>AgroGuard</h4>
+        <p data-i18n="common.footer_desc">A smart, low-cost agronomic decision support system providing telemetry automation and water conservation metrics to farming communities.</p>
+      </div>
+      <div class="footer-links">
+        <h5 data-i18n="common.quick_links">Quick Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" data-i18n="nav.about">About Project</a></li>
+          <li><a href="features.html" data-i18n="nav.features">Platform Features</a></li>
+          <li><a href="dashboard.html" data-i18n="nav.dashboard">Live Dashboard</a></li>
+          <li><a href="profile.html" data-i18n="nav.my_farm">My Farm</a></li>
+          <li><a href="alerts.html" data-i18n="nav.alerts">Alerts & Notifications</a></li>
+          <li><a href="contact.html" data-i18n="nav.contact">Contact Team</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h5 data-i18n="common.support">Support</h5>
+        <div class="footer-contact-item">
+          <span>kunal610sharma@gmail.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="common.copyright">&copy; 2026 AgroGuard Project. Built for Smart Agricultural Sustainability.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Login Flow Controller Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectUrl = urlParams.get('redirect') || 'dashboard.html';
+      const requestedStep = urlParams.get('step');
+
+      // If user is already authenticated and has completed profile, redirect directly
+      if (authService.isAuthenticated() && authService.hasCompletedProfile() && requestedStep !== 'profile') {
+        window.location.replace(redirectUrl);
+        return;
+      }
+
+      // If already authenticated but profile incomplete
+      if (authService.isAuthenticated() && !authService.hasCompletedProfile()) {
+        showView('viewProfileSetup');
+        populateProfileSetup();
+        return;
+      }
+
+      // Views
+      const viewSplash = document.getElementById('viewSplash');
+      const viewPhone = document.getElementById('viewPhone');
+      const viewOtp = document.getElementById('viewOtp');
+      const viewProfileSetup = document.getElementById('viewProfileSetup');
+      const alertBox = document.getElementById('authAlert');
+      const alertText = document.getElementById('authAlertText');
+
+      // Form Elements
+      const phoneForm = document.getElementById('phoneForm');
+      const farmerPhone = document.getElementById('farmerPhone');
+      const btnStartLogin = document.getElementById('btnStartLogin');
+      const btnFillDemoPhone = document.getElementById('btnFillDemoPhone');
+      const btnEditPhone = document.getElementById('btnEditPhone');
+      const phoneDisplay = document.getElementById('phoneDisplay');
+      const otpForm = document.getElementById('otpForm');
+      const otpBoxes = document.querySelectorAll('.otp-box');
+      const btnAutoFillOtp = document.getElementById('btnAutoFillOtp');
+      const btnResendOtp = document.getElementById('btnResendOtp');
+      const countdownText = document.getElementById('countdownText');
+      const timerContainer = document.getElementById('timerContainer');
+      const profileSetupForm = document.getElementById('profileSetupForm');
+
+      let resendTimer = null;
+      let secondsLeft = 60;
+
+      // Check if URL specified a step
+      if (requestedStep === 'phone') {
+        showView('viewPhone');
+      }
+
+      // View Switcher
+      function showView(viewId) {
+        hideAlert();
+        [viewSplash, viewPhone, viewOtp, viewProfileSetup].forEach(v => {
+          if (v) v.style.display = (v.id === viewId) ? 'block' : 'none';
+        });
+      }
+
+      // Alert Helpers
+      function showAlert(msg, type = 'error') {
+        alertText.innerText = msg;
+        alertBox.className = `auth-alert show ${type}`;
+      }
+      function hideAlert() {
+        alertBox.className = 'auth-alert';
+      }
+
+      // --- 1. SPLASH SCREEN ---
+      btnStartLogin.addEventListener('click', () => {
+        showView('viewPhone');
+      });
+
+      // --- 2. PHONE NUMBER VIEW ---
+      btnFillDemoPhone.addEventListener('click', () => {
+        farmerPhone.value = '9876543210';
+        farmerPhone.dispatchEvent(new Event('input', { bubbles: true }));
+        hideAlert();
+      });
+
+      phoneForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+        const phone = farmerPhone.value.trim();
+
+        const btn = document.getElementById('btnSendOtp');
+        const origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerText = 'Sending Code...';
+
+        try {
+          const result = await authService.sendOTP(phone);
+          phoneDisplay.innerText = `+91 ${authService.pendingPhone}`;
+          showView('viewOtp');
+          startResendCountdown();
+          // Focus first OTP box
+          if (otpBoxes[0]) otpBoxes[0].focus();
+        } catch (err) {
+          showAlert(err.message || 'Failed to send OTP. Please check mobile number.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = origText;
+        }
+      });
+
+      btnEditPhone.addEventListener('click', (e) => {
+        e.preventDefault();
+        showView('viewPhone');
+      });
+
+      // --- 3. OTP VERIFICATION VIEW ---
+      // Auto-advance OTP box typing & backspace handling
+      otpBoxes.forEach((box, index) => {
+        box.addEventListener('input', (e) => {
+          const val = e.target.value.replace(/\D/g, '');
+          e.target.value = val ? val.slice(-1) : '';
+
+          if (e.target.value && index < otpBoxes.length - 1) {
+            otpBoxes[index + 1].focus();
+          }
+        });
+
+        box.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !e.target.value && index > 0) {
+            otpBoxes[index - 1].focus();
+          }
+        });
+
+        box.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+          if (pasted) {
+            pasted.split('').slice(0, 6).forEach((char, i) => {
+              if (otpBoxes[i]) otpBoxes[i].value = char;
+            });
+            const nextFocus = Math.min(pasted.length, otpBoxes.length - 1);
+            if (otpBoxes[nextFocus]) otpBoxes[nextFocus].focus();
+          }
+        });
+      });
+
+      // Quick 1-click Auto-fill Demo OTP
+      btnAutoFillOtp.addEventListener('click', () => {
+        '123456'.split('').forEach((digit, i) => {
+          if (otpBoxes[i]) otpBoxes[i].value = digit;
+        });
+        hideAlert();
+      });
+
+      // Resend OTP logic
+      btnResendOtp.addEventListener('click', async () => {
+        btnResendOtp.disabled = true;
+        try {
+          await authService.resendOTP();
+          showAlert('New demo OTP sent (123456).', 'success');
+          startResendCountdown();
+        } catch (err) {
+          showAlert(err.message, 'error');
+          btnResendOtp.disabled = false;
+        }
+      });
+
+      function startResendCountdown() {
+        clearInterval(resendTimer);
+        secondsLeft = 60;
+        btnResendOtp.disabled = true;
+        timerContainer.style.display = 'inline';
+
+        resendTimer = setInterval(() => {
+          secondsLeft--;
+          countdownText.innerText = secondsLeft;
+          if (secondsLeft <= 0) {
+            clearInterval(resendTimer);
+            btnResendOtp.disabled = false;
+            timerContainer.style.display = 'none';
+          }
+        }, 1000);
+      }
+
+      // Verify OTP Submission
+      otpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+
+        const code = Array.from(otpBoxes).map(b => b.value).join('');
+        const btn = document.getElementById('btnVerifyOtp');
+        const origText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerText = 'Verifying...';
+
+        try {
+          const result = await authService.verifyOTP(code);
+
+          // If profile is new or incomplete -> go to profile setup
+          if (result.isNewProfile || !authService.hasCompletedProfile()) {
+            showView('viewProfileSetup');
+            populateProfileSetup();
+          } else {
+            // Already has profile -> redirect to destination
+            showAlert('Authentication successful! Loading dashboard...', 'success');
+            setTimeout(() => {
+              window.location.replace(redirectUrl);
+            }, 800);
+          }
+        } catch (err) {
+          showAlert(err.message || 'Invalid verification code.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = origText;
+        }
+      });
+
+      // --- 4. PROFILE SETUP VIEW ---
+      function populateProfileSetup() {
+        const user = authService.getCurrentUser();
+        const profile = authService.getProfile();
+        const phoneField = document.getElementById('setupFarmerPhone');
+        if (phoneField) {
+          phoneField.value = user ? `+91 ${user.phone}` : (profile?.phone || '');
+        }
+        if (profile) {
+          if (profile.name) document.getElementById('setupFarmerName').value = profile.name;
+          if (profile.farmName) document.getElementById('setupFarmName').value = profile.farmName;
+          if (profile.cropName) document.getElementById('setupCropName').value = profile.cropName;
+          if (profile.location) document.getElementById('setupLocation').value = profile.location;
+          if (profile.farmSize) document.getElementById('setupFarmSize').value = profile.farmSize;
+          if (profile.sizeUnit) document.getElementById('setupSizeUnit').value = profile.sizeUnit;
+        }
+      }
+
+      profileSetupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+
+        const name = document.getElementById('setupFarmerName').value.trim();
+        const farmName = document.getElementById('setupFarmName').value.trim();
+        const cropName = document.getElementById('setupCropName').value.trim();
+        const location = document.getElementById('setupLocation').value.trim();
+        const farmSize = document.getElementById('setupFarmSize').value.trim();
+        const sizeUnit = document.getElementById('setupSizeUnit').value;
+
+        if (!name || !farmName || !cropName || !location || !farmSize) {
+          showAlert('Please fill in all farm profile fields.', 'error');
+          return;
+        }
+
+        const btn = document.getElementById('btnSaveProfile');
+        const origText = btn ? btn.innerHTML : '';
+        if (btn) {
+          btn.disabled = true;
+          btn.innerText = 'Saving Profile...';
+        }
+
+        try {
+          const user = authService.getCurrentUser();
+          await authService.saveProfile({
+            name,
+            phone: user?.phone || '',
+            farmName,
+            cropName,
+            location,
+            farmSize,
+            sizeUnit
+          });
+
+          showAlert('Profile configured! Redirecting to dashboard...', 'success');
+          setTimeout(() => {
+            window.location.replace(redirectUrl);
+          }, 800);
+        } catch (err) {
+          showAlert(err.message || 'Failed to save profile. Please try again.', 'error');
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = origText;
+          }
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>

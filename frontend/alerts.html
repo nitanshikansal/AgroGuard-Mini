@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AgroGuard Farm Alerts and Notifications. Real-time notifications for soil moisture, rain, irrigation events, and health metrics.">
+  <title>Farm Alerts & Notifications | AgroGuard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container">
+      <a href="index.html" class="logo-link" id="navLogoLink">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="logo-img" id="navLogoImg">
+        <span class="logo-text" id="navLogoText">AgroGuard</span>
+      </a>
+      
+      <button class="hamburger" id="menuHamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link" id="navLinkHome" data-i18n="nav.home">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link" id="navLinkAbout" data-i18n="nav.about">About</a></li>
+        <li class="nav-item"><a href="features.html" class="nav-link" id="navLinkFeatures" data-i18n="nav.features">Features</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link" id="navLinkDashboard" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="profile.html" class="nav-link" id="navLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+        <li class="nav-item">
+          <a href="alerts.html" class="nav-link active nav-bell-link" id="navLinkAlerts" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            <span class="bell-badge" id="navBellBadge" style="display: none;">0</span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link" id="navLinkContact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Alerts Container -->
+  <main class="container alerts-page-container" id="alertsMain">
+    
+    <!-- Alerts Header -->
+    <div class="alerts-header">
+      <div class="alerts-header-title">
+        <svg style="width:32px;height:32px;color:var(--primary-green);" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" fill="currentColor"/></svg>
+        <div>
+          <h1 data-i18n="alerts.page_title">Farm Alerts & Notifications</h1>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 2px;" data-i18n="alerts.page_subtitle">Real-time automated alerts from field sensors and advisory models</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span class="alerts-count-chip" id="unreadCountChip">0 Unread</span>
+      </div>
+    </div>
+
+    <!-- Toolbar: Filters & Bulk Actions -->
+    <div class="alerts-toolbar">
+      <div class="alerts-filter-group" id="filterGroup">
+        <button type="button" class="filter-tab active" data-filter="all" data-i18n="alerts.filter_all">All Alerts</button>
+        <button type="button" class="filter-tab" data-filter="unread" data-i18n="alerts.filter_unread">Unread Only</button>
+        <button type="button" class="filter-tab" data-filter="warning" data-i18n="alerts.filter_warning">Warnings</button>
+        <button type="button" class="filter-tab" data-filter="irrigation" data-i18n="alerts.filter_irrigation">Irrigation</button>
+      </div>
+
+      <div class="alerts-bulk-actions">
+        <button type="button" class="btn btn-secondary btn-sm" id="btnMarkAllRead" title="Mark all alerts as read">
+          <svg style="width:14px;height:14px;margin-right:4px;" viewBox="0 0 24 24"><path d="M0.41,13.41L6,19L7.41,17.58L1.83,12M22.24,5.58L11.66,16.17L7.5,12L6.07,13.41L11.66,19L23.66,7M18,7L16.59,5.58L10.24,11.93L11.66,13.34L18,7Z" fill="currentColor"/></svg>
+          <span data-i18n="common.mark_all_read">Mark All Read</span>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnClearAll" style="border-color: #cbd5e1; color: var(--text-muted);" title="Clear all alerts">
+          <svg style="width:14px;height:14px;margin-right:4px;" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" fill="currentColor"/></svg>
+          <span data-i18n="common.clear_all">Clear All</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Alerts Feed List -->
+    <div class="alert-list" id="alertListContainer">
+      <!-- Dynamic alert cards rendered via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="alerts-empty-state" id="emptyState" style="display: none;">
+      <div class="empty-state-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      </div>
+      <h3 data-i18n="common.all_clear">All Clear!</h3>
+      <p data-i18n="alerts.empty_desc">There are no active alerts for your farm. All sub-surface moisture and weather parameters are operating within optimal targets.</p>
+    </div>
+
+    <!-- Notification Architecture & Future Hardware Card -->
+    <div class="arch-card" id="archCard">
+      <h4>
+        <svg style="width:18px;height:18px;color:var(--accent-blue);" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z" fill="currentColor"/></svg>
+        <span data-i18n="alerts.arch_title">Notification Architecture & Future IoT Hardware Pipeline</span>
+      </h4>
+      <p data-i18n="alerts.arch_desc">
+        Currently running via <strong>NotificationService</strong> local telemetry event dispatcher. The system is architected for seamless expansion into cloud push notifications and edge vision sensors.
+      </p>
+      
+      <div class="arch-flow-diagram">
+        <span>ESP32 Moisture / Rain Sensors</span>
+        ➔
+        <span>Flask REST API</span>
+        ➔
+        <span>NotificationService</span>
+        ➔
+        <span>Farmer App / Web Push (FCM)</span>
+      </div>
+
+      <div class="arch-flow-diagram" style="margin-top: 8px;">
+        <span>Future: ESP32-CAM Boundary Node</span>
+        ➔
+        <span>Backend Intrusion Engine</span>
+        ➔
+        <span>High-Priority Push Alert</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="mainFooter">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h4>AgroGuard</h4>
+        <p data-i18n="common.footer_desc">A smart, low-cost agronomic decision support system providing telemetry automation and water conservation metrics to farming communities.</p>
+      </div>
+      <div class="footer-links">
+        <h5 data-i18n="common.quick_links">Quick Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Project</a></li>
+          <li><a href="features.html">Platform Features</a></li>
+          <li><a href="dashboard.html">Live Dashboard</a></li>
+          <li><a href="profile.html">My Farm</a></li>
+          <li><a href="alerts.html">Alerts & Notifications</a></li>
+          <li><a href="contact.html">Contact Team</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h5>Support</h5>
+        <div class="footer-contact-item">
+          <span>kunal610sharma@gmail.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 AgroGuard Project. Built for Smart Agricultural Sustainability.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Alerts Screen Controller Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('alertListContainer');
+      const emptyState = document.getElementById('emptyState');
+      const unreadCountChip = document.getElementById('unreadCountChip');
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const btnMarkAllRead = document.getElementById('btnMarkAllRead');
+      const btnClearAll = document.getElementById('btnClearAll');
+
+      let currentFilter = 'all';
+
+      const t = (k, fb) => (window.i18n ? window.i18n.t(k) || fb : fb);
+
+      // SVG Icon Mapping for Alert Categories
+      function getAlertIcon(type) {
+        switch (type) {
+          case 'low_moisture':
+            return `<svg viewBox="0 0 24 24"><path d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20M12,5.5C10.5,7.5 7.8,11.2 7.8,14A4.2,4.2 0 0,0 12,18.2A4.2,4.2 0 0,0 16.2,14C16.2,11.2 13.5,7.5 12,5.5Z"/></svg>`;
+          case 'rain_detected':
+            return `<svg viewBox="0 0 24 24"><path d="M19.35,10.04C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.04C2.34,8.36 0,10.9 0,14C0,17.1 2.9,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.04M19,18H6C3.79,18 2,16.21 2,14C2,11.95 3.53,10.24 5.56,10.03L6.63,9.92L7.13,8.97C8.08,7.14 9.94,6 12,6C14.89,6 17.39,8.08 17.85,10.95L18.12,12.58L19.73,12.69C21.07,12.78 22,13.81 22,15C22,16.65 20.65,18 19,18Z"/></svg>`;
+          case 'low_water':
+            return `<svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z"/></svg>`;
+          case 'irrigation_started':
+          case 'irrigation_stopped':
+            return `<svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2.5V2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z"/></svg>`;
+          case 'health_warning':
+          default:
+            return `<svg viewBox="0 0 24 24"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/></svg>`;
+        }
+      }
+
+      function renderAlerts() {
+        const alerts = notificationService.getAlerts(currentFilter);
+        const unreadCount = notificationService.getUnreadCount();
+
+        unreadCountChip.innerText = `${unreadCount} ${t('common.unread', 'Unread')}`;
+
+        if (alerts.length === 0) {
+          container.innerHTML = '';
+          emptyState.style.display = 'flex';
+          return;
+        }
+
+        emptyState.style.display = 'none';
+
+        container.innerHTML = alerts.map(rawAlt => {
+          const alt = notificationService.getLocalizedAlert ? notificationService.getLocalizedAlert(rawAlt) : rawAlt;
+          const timeAgo = notificationService.getRelativeTime(alt.timestamp);
+          const severityClass = alt.severity || 'info';
+          const unreadClass = alt.read ? '' : 'unread';
+
+          return `
+            <div class="alert-card ${unreadClass} ${severityClass}" id="card_${alt.id}">
+              <div class="alert-icon-wrapper ${severityClass}">
+                ${getAlertIcon(alt.type)}
+              </div>
+              
+              <div class="alert-content">
+                <div class="alert-meta">
+                  <span class="alert-title">${alt.title}</span>
+                  <span class="alert-badge ${severityClass}">${severityClass}</span>
+                  <span class="alert-time">${timeAgo}</span>
+                </div>
+                
+                <p class="alert-message">${alt.message}</p>
+                
+                <div class="alert-actions">
+                  ${!alt.read ? `
+                    <button type="button" class="btn-item-action" onclick="handleMarkRead('${alt.id}')">
+                      <svg style="width:12px;height:12px;" viewBox="0 0 24 24"><path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" fill="currentColor"/></svg>
+                      ${t('common.mark_read', 'Mark as read')}
+                    </button>
+                  ` : ''}
+                  <button type="button" class="btn-item-action delete" onclick="handleDeleteAlert('${alt.id}')">
+                    <svg style="width:12px;height:12px;" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" fill="currentColor"/></svg>
+                    ${t('common.dismiss', 'Dismiss')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Filter handling
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentFilter = tab.getAttribute('data-filter');
+          renderAlerts();
+        });
+      });
+
+      // Bulk actions
+      btnMarkAllRead.addEventListener('click', () => {
+        notificationService.markAllAsRead();
+        renderAlerts();
+      });
+
+      btnClearAll.addEventListener('click', () => {
+        if (confirm(t('alerts.confirm_clear', 'Are you sure you want to clear all farm alerts?'))) {
+          notificationService.clearAll();
+          renderAlerts();
+        }
+      });
+
+      // Window global action proxies for inline click handlers
+      window.handleMarkRead = (id) => {
+        notificationService.markAsRead(id);
+        renderAlerts();
+      };
+
+      window.handleDeleteAlert = (id) => {
+        notificationService.deleteAlert(id);
+        renderAlerts();
+      };
+
+      // Subscribe to updates
+      notificationService.subscribe(() => {
+        renderAlerts();
+      });
+
+      // Re-render immediately on instant language change
+      window.addEventListener('agroguard:languageChanged', () => {
+        renderAlerts();
+      });
+
+      // Initial Render
+      renderAlerts();
+    });
+  </script>
+</body>
+</html>

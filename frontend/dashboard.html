@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Access the AgroGuard real-time telemetry console. Monitor soil moisture, weather forecast trends, tank volumes, and trigger overrides.">
+  <title>Console Dashboard | AgroGuard Smart Decision Support</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/translations.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Route guard: Block unauthenticated access immediately
+    if (!authService.protectRoute('dashboard.html')) {
+      // protectRoute redirects to login.html
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Sticky Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container">
+      <a href="index.html" class="logo-link" id="navLogoLink">
+        <img src="assets/logo/logo.png" alt="AgroGuard Logo" class="logo-img" id="navLogoImg">
+        <span class="logo-text" id="navLogoText">AgroGuard</span>
+      </a>
+      
+      <button class="hamburger" id="menuHamburger" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item"><a href="index.html" class="nav-link" id="navLinkHome" data-i18n="nav.home">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link" id="navLinkAbout" data-i18n="nav.about">About</a></li>
+        <li class="nav-item"><a href="features.html" class="nav-link" id="navLinkFeatures" data-i18n="nav.features">Features</a></li>
+        <li class="nav-item"><a href="dashboard.html" class="nav-link active" id="navLinkDashboard" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li class="nav-item"><a href="profile.html" class="nav-link" id="navLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+        <li class="nav-item">
+          <a href="alerts.html" class="nav-link nav-bell-link" id="navLinkAlerts" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            <span class="bell-badge" id="navBellBadge" style="display: none;">0</span>
+          </a>
+        </li>
+        <li class="nav-item"><a href="contact.html" class="nav-link" id="navLinkContact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Container -->
+  <main class="container dashboard-container" id="dashboardMain">
+    
+    <!-- System Status Header -->
+    <div class="dashboard-header" id="dashHeader">
+      <div class="dashboard-title-area" id="dashTitleArea">
+        <h1 id="dashTitle" data-i18n="dash.title">AgroGuard Farm Console</h1>
+        <div class="dashboard-meta" id="dashMeta">
+          <div class="status-badge-container" id="liveStatusContainer">
+            <span class="status-indicator live" id="liveStatusDot"></span>
+            <span style="font-weight: 600; color: var(--primary-green);" id="liveStatusText" data-i18n="common.status_live">Microcontroller Live</span>
+          </div>
+          <span style="opacity: 0.5;">|</span>
+          <span id="farmerBannerInfo" style="font-weight: 600; color: var(--primary-green);"><span data-i18n="common.farmer">Farmer</span>: <span id="dashFarmerName" style="color:var(--text-dark);">--</span> (<span id="dashFarmName" style="color:var(--text-muted);">--</span>)</span>
+          <span style="opacity: 0.5;">|</span>
+          <span id="dashLastSync"><span data-i18n="common.last_updated">Last updated</span>: <span id="timestamp" style="font-weight:600; color:var(--text-dark);">--:--:--</span></span>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <button class="btn-refresh" id="btnRefresh" aria-label="Sync Metrics">
+          <svg viewBox="0 0 24 24"><path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/></svg>
+          <span data-i18n="dash.refresh_btn">Sync Telemetry</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" id="btnDashboardLogout" style="border-color: #cbd5e1; color: var(--text-dark);">
+          <svg style="width:14px;height:14px;margin-right:4px;" viewBox="0 0 24 24"><path d="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" fill="currentColor"/></svg>
+          <span data-i18n="nav.logout">Logout</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Connection Error Notice Banner (Hidden by default) -->
+    <div id="dashErrorBanner" style="display:none; background:#fef2f2; border:1px solid #fca5a5; border-radius:8px; padding:12px 16px; margin-bottom:20px; color:#991b1b; font-size:0.9rem; align-items:center; justify-content:space-between; gap:12px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg style="width:20px; height:20px; fill:currentColor; flex-shrink:0;" viewBox="0 0 24 24"><path d="M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16"/></svg>
+        <span id="dashErrorText" data-i18n="dash.error_connection">Unable to connect to the farm controller. Please check the connection.</span>
+      </div>
+      <button class="btn btn-sm btn-secondary" id="btnRetrySync" style="padding:4px 12px; font-size:0.8rem; white-space:nowrap; border-color:#fca5a5; color:#991b1b;">Retry</button>
+    </div>
+
+    <!-- Metric Grid -->
+    <div class="dashboard-grid" id="dashMetricGrid">
+      
+      <!-- Card 1: Soil Moisture -->
+      <div class="dashboard-card" id="cardMoisture">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_moisture">Soil Moisture</span>
+          <div class="dashboard-card-icon blue-theme">
+            <svg viewBox="0 0 24 24"><path d="M12,20A6,6 0 0,1 6,14C6,10 12,3.25 12,3.25C12,3.25 18,10 18,14A6,6 0 0,1 12,20M12,5.5C10.5,7.5 7.8,11.2 7.8,14A4.2,4.2 0 0,0 12,18.2A4.2,4.2 0 0,0 16.2,14C16.2,11.2 13.5,7.5 12,5.5Z"/></svg>
+          </div>
+        </div>
+        <div class="dashboard-card-value" id="moistureVal">-- %</div>
+        <div class="dashboard-card-status normal" id="moistureStatus">Syncing...</div>
+      </div>
+
+      <!-- Card 2: Temperature -->
+      <div class="dashboard-card" id="cardTemperature">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_temp">Temperature</span>
+          <div class="dashboard-card-icon brown-theme">
+            <svg viewBox="0 0 24 24"><path d="M15,13V5A3,3 0 0,0 12,2A3,3 0 0,0 9,5V13A5,5 0 0,0 7,17A5,5 0 0,0 12,22A5,5 0 0,0 17,17A5,5 0 0,0 15,13M12,4A1,1 0 0,1 13,5V8H11V5A1,1 0 0,1 12,4M12,20A3,3 0 0,1 9,17A3,3 0 0,1 10.5,14.5L11,14.17V10H13V14.17L13.5,14.5A3,3 0 0,1 15,17A3,3 0 0,1 12,20Z"/></svg>
+          </div>
+        </div>
+        <div class="dashboard-card-value" id="tempVal">-- °C</div>
+        <div class="dashboard-card-status normal" id="tempStatus">Syncing...</div>
+      </div>
+
+      <!-- Card 3: Humidity -->
+      <div class="dashboard-card" id="cardHumidity">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_humidity">Humidity</span>
+          <div class="dashboard-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M19.35,10.04C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.04C2.34,8.36 0,10.9 0,14C0,17.1 2.9,20 6,20H19C21.76,20 24,17.76 24,15C24,12.36 21.95,10.22 19.35,10.04M19,18H6C3.79,18 2,16.21 2,14C2,11.95 3.53,10.24 5.56,10.03L6.63,9.92L7.13,8.97C8.08,7.14 9.94,6 12,6C14.89,6 17.39,8.08 17.85,10.95L18.12,12.58L19.73,12.69C21.07,12.78 22,13.81 22,15C22,16.65 20.65,18 19,18Z"/></svg>
+          </div>
+        </div>
+        <div class="dashboard-card-value" id="humidityVal">-- %</div>
+        <div class="dashboard-card-status info" id="humidityStatus">Optimal</div>
+      </div>
+
+      <!-- Card 4: Rain Status -->
+      <div class="dashboard-card" id="cardRain">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_rain">Rain Status</span>
+          <div class="dashboard-card-icon blue-theme">
+            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V12H16V14H10V6H12Z"/></svg>
+          </div>
+        </div>
+        <div class="dashboard-card-value" id="rainVal">--</div>
+        <div class="dashboard-card-status normal" id="rainStatus">Syncing...</div>
+      </div>
+
+      <!-- Card 5: Water level -->
+      <div class="dashboard-card" id="cardWaterLevel">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_water">Water Tank Level</span>
+          <div class="dashboard-card-icon blue-theme">
+            <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z"/></svg>
+          </div>
+        </div>
+        <div class="dashboard-card-value" id="waterVal">-- %</div>
+        <div class="dashboard-card-status normal" id="waterStatus">Syncing...</div>
+      </div>
+
+      <!-- Card 6: Farm Health Index -->
+      <div class="dashboard-card span-2" id="cardHealthIndex">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_health">Farm Health Index</span>
+          <span class="dashboard-card-status normal" id="healthVal">Syncing...</span>
+        </div>
+        <div class="health-ring-wrapper" id="healthRingWrapper">
+          <div class="health-svg-container" id="healthSvgContainer">
+            <svg width="80" height="80">
+              <circle class="health-circle-bg" cx="40" cy="40" r="36"></circle>
+              <circle class="health-circle-bar" id="healthCircle" cx="40" cy="40" r="36"></circle>
+            </svg>
+            <div class="health-score-text" id="healthScoreText">--%</div>
+          </div>
+          <div id="healthExplanation">
+            <h4 style="font-size:1rem; margin-bottom:4px; color:var(--text-dark);" id="healthExplTitle">Plot Wellness Grading</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.4;" id="healthExplDesc">Evaluates continuous water availability, temperature indices, and storage variables against crop tolerance standards.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7: Local Weather -->
+      <div class="dashboard-card" id="cardWeather">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.weather_title">Weather (Local)</span>
+          <div class="dashboard-card-icon warning-theme">
+            <svg viewBox="0 0 24 24"><path d="M12,18C11.11,18 10.26,17.8 9.5,17.45C11.56,16.5 13,14.42 13,12C13,9.58 11.56,7.5 9.5,6.55C10.26,6.2 11.11,6 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31L23.31,12L20,8.69Z"/></svg>
+          </div>
+        </div>
+        <div class="weather-container" id="weatherContent">
+          <div class="dashboard-card-value" id="weatherTemp" style="margin-bottom:2px;">--°C</div>
+          <div style="font-size:0.9rem; font-weight:600; color:var(--text-dark);" id="weatherCondition">Syncing...</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);" id="weatherRange">Syncing...</div>
+        </div>
+      </div>
+
+      <!-- Card 8: Recommendation (Span 2 columns) -->
+      <div class="dashboard-card span-2" id="cardRecommendation">
+        <div class="dashboard-card-top">
+          <span class="dashboard-card-title" data-i18n="dash.card_advisory">Smart Advisory Engine</span>
+          <div class="dashboard-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12,2A7,7 0 0,0 5,9C5,11.38 6.19,13.47 8,14.74V17A1,1 0 0,0 9,18H15A1,1 0 0,0 16,17V14.74C17.81,13.47 19,11.38 19,9A7,7 0 0,0 12,2M9,21A1,1 0 0,0 10,22H14A1,1 0 0,0 15,21V20H9V21Z"/></svg>
+          </div>
+        </div>
+        <div class="recommendation-container" id="recContainer">
+          <div class="recommendation-crop" id="recCropWrapper">
+            <span style="font-size:0.9rem; color:var(--text-muted); font-weight:normal;" id="recCropPre" data-i18n="dash.crop_label">Ideal Crop:</span>
+            <span id="recCrop">Syncing...</span>
+          </div>
+          <p class="recommendation-desc" id="recText">Syncing agronomic advisory data based on plot statistics...</p>
+          <div class="recommendation-spae" id="recSpaeWrapper" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-color, #e2e8f0);">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+              <span style="font-size:0.85rem; font-weight:600; color:var(--text-dark);" id="spaeTitle" data-i18n="dash.spae_title">Pesticide Spray Advisory:</span>
+              <span class="dashboard-card-status normal" id="spaeStatusBadge" style="font-size:0.75rem; padding:2px 8px;">Suitable</span>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.4; margin:0;" id="spaeText">Favorable environmental window for spraying with PPE precautions.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 9: Moisture Sparkline Chart (Span 2 columns) -->
+      <div class="dashboard-card span-2" id="cardAnalytics">
+        <div class="dashboard-card-top" style="margin-bottom: 0;">
+          <span class="dashboard-card-title" data-i18n="dash.chart_title">Soil Moisture Trend (24h)</span>
+          <span style="font-size: 0.8rem; color: var(--accent-blue); font-weight: 600;" id="analyticsLabel">Telemetry Log</span>
+        </div>
+        <div class="chart-container" id="chartContainer">
+          <svg class="chart-svg" viewBox="0 0 600 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chart-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--accent-blue)" />
+                <stop offset="100%" stop-color="var(--accent-blue)" stop-opacity="0" />
+              </linearGradient>
+            </defs>
+            <path class="chart-area" id="chartArea" d="M 0,100 L 0,100 Z"></path>
+            <path class="chart-line" id="chartLine" d="M 0,100 L 0,100 Z"></path>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Control Actions & Overrides Row -->
+    <div class="dashboard-actions-row" id="dashboardControls">
+      <!-- Pump Overrides Card -->
+      <div class="console-card" id="cardConsoleControls">
+        <h3 id="consoleControlsTitle">Manual Device Override Panel</h3>
+        <div class="console-controls" id="consoleControlsButtons">
+          <!-- Toggle Switch for Auto Mode -->
+          <div class="toggle-switch-wrapper" id="toggleAutoWrapper">
+            <div class="toggle-label" id="toggleAutoLabel" data-i18n="dash.auto_irrigation">Automatic Irrigation Logic</div>
+            <label class="switch" id="switchAutoLabel">
+              <input type="checkbox" id="switchAuto" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Direct Pump Test Trigger Button -->
+          <button class="btn-trigger-pump" id="btnPump" aria-label="Toggle Pump Mode">
+            <svg style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2.5V2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6V11.5L16.25,14L17,12.75L13.5,10.68V6H12Z" fill="currentColor"/></svg>
+            <span id="btnPumpText" data-i18n="dash.pump_test">Test Irrigation Pump</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Flask Integration Info Banner -->
+      <div class="console-card" style="border-left: 5px solid var(--accent-blue); padding:20px; display:flex; flex-direction:column; justify-content:center;" id="cardFlaskIntegrationNotice">
+        <h4 style="font-size:0.95rem; margin-bottom:8px; color:var(--text-dark);" id="flaskInfoTitle">Flask API Hookup</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.4;" id="flaskInfoText">Currently running simulation modules. Swap endpoint constants in <a href="js/dashboard.js" style="font-weight: 600; color: var(--primary-green);">dashboard.js</a> to integrate real-time microcontroller arrays.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer" id="mainFooter">
+    <div class="container footer-grid">
+      <div class="footer-brand" id="footerBrand">
+        <h4>AgroGuard</h4>
+        <p data-i18n="common.footer_desc">A smart, low-cost agronomic decision support system providing telemetry automation and water conservation metrics to farming communities.</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;" data-i18n="common.footer_tagline">Designed for modern AgriTech and ecological sustainability.</p>
+      </div>
+
+      <div class="footer-links" id="footerLinks">
+        <h5 data-i18n="common.quick_links">Quick Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="index.html" id="footLinkHome" data-i18n="nav.home">Home</a></li>
+          <li><a href="about.html" id="footLinkAbout" data-i18n="nav.about">About Project</a></li>
+          <li><a href="features.html" id="footLinkFeatures" data-i18n="nav.features">Platform Features</a></li>
+          <li><a href="dashboard.html" id="footLinkDashboard" data-i18n="nav.dashboard">Live Dashboard</a></li>
+          <li><a href="profile.html" id="footLinkProfile" data-i18n="nav.my_farm">My Farm</a></li>
+          <li><a href="alerts.html" id="footLinkAlerts" data-i18n="nav.alerts">Alerts & Notifications</a></li>
+          <li><a href="contact.html" id="footLinkContact" data-i18n="nav.contact">Contact Team</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact" id="footerContact">
+        <h5 data-i18n="common.project_details">Project Details</h5>
+        <div class="footer-contact-item" id="footDetailsCollege">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" fill="currentColor"/></svg>
+          </div>
+          <span data-i18n="common.college_dept">AgriTech Innovations Lab, Department of Computer Science & Engineering</span>
+        </div>
+        <div class="footer-contact-item" id="footDetailsEmail">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" fill="currentColor"/></svg>
+          </div>
+          <span>kunal610sharma@gmail.com</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom" id="footerBottom">
+      <p data-i18n="common.copyright">&copy; 2026 AgroGuard Project. All Rights Reserved. Built for Smart Agricultural Sustainability.</p>
+    </div>
+  </footer>
+
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
